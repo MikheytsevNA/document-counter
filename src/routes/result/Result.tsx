@@ -1,15 +1,14 @@
 import { useState, useEffect, ReactElement } from "react";
 import "./Result.css";
+import { useNavigate } from "react-router-dom";
 
 function Loading() {
   return <h2>🌀 Загрузка...</h2>;
 }
 
 async function getResults(): Promise<[string, number][]> {
-  const response = await fetch(`${import.meta.env.VITE_SERVER_ADD}/documents`, {
-    mode: "no-cors",
-  });
-
+  const response = await fetch(`${import.meta.env.VITE_SERVER_ADD}/documents`);
+  console.log(response);
   const data: { title: string }[] = await response.json();
   const countTitles: { [key: string]: number } = data.reduce<{
     [key: string]: number;
@@ -28,6 +27,8 @@ export default function Result() {
   const [state, setState] = useState("");
   const [error, setError] = useState(false);
   const [list, setList] = useState<ReactElement[]>();
+  const navigate = useNavigate();
+
   useEffect(() => {
     setState("loading");
     getResults()
@@ -54,12 +55,25 @@ export default function Result() {
   if (state === "error") return <h1>{error.toString()}</h1>;
 
   return (
-    <>
+    <div className="results">
       {state === "loading" ? (
         <Loading />
       ) : (
         <ul className="result-list">{list}</ul>
       )}
-    </>
+
+      <div className="choice">
+        <button type="submit" onClick={() => navigate("/login")}>
+          Форма для заявки
+        </button>
+        <button
+          disabled={true}
+          type="submit"
+          onClick={() => navigate("/result")}
+        >
+          Сводная таблица
+        </button>
+      </div>
+    </div>
   );
 }

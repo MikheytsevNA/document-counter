@@ -41,6 +41,15 @@
   color: #888;
 }
 
+.choice {
+  display: flex;
+  flex-direction: column;
+}
+
+.choice button {
+  margin: 0 0 20px 0;
+}
+
 .authorization {
   display: flex;
   flex-direction: column;

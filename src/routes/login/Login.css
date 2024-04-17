@@ -41,7 +41,34 @@
   color: #888;
 }
 
+.topPannel {
+  position: absolute;
+  top: 0;
+}
+
+.login-container {
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.login-container .choice {
+  display: flex;
+  flex-direction: row;
+}
+
+.login-container .choice button {
+  margin: 0 10 0 10;
+}
+
 .authenticate {
   display: flex;
   flex-direction: column;
+}
+
+.authenticate label {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 10px 0;
 }

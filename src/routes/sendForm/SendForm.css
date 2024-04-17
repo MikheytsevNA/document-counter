@@ -40,3 +40,54 @@
 .read-the-docs {
   color: #888;
 }
+
+.form-container {
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.form {
+  width: 50vw;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.form__select,
+.form__name {
+  height: 90px;
+  width: 200px;
+}
+
+.form__select__selector {
+  height: 40px;
+  border: solid 2px light-dark(#767676, #858585);
+  border-radius: 1px;
+}
+
+.form__name input {
+  box-sizing: border-box;
+  height: 38px;
+  padding: 0 5px;
+}
+
+.form label {
+  display: flex;
+  flex-direction: column;
+}
+
+.form__submit {
+}
+
+.form-container .choice {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  justify-content: center;
+}
+
+.form-container .choice button {
+  margin: 0 5px 0 0;
+}

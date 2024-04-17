@@ -1,6 +1,7 @@
 import "./SendForm.css";
 import AsyncSelect from "react-select/async";
 import { ReactElement, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 async function checkExistingDoc(
   author: string,
@@ -16,6 +17,7 @@ async function checkExistingDoc(
 export default function SendForm(): ReactElement {
   const [userChoice, setUserChoice] = useState("");
   const [titleChoice, setTitleChoice] = useState("");
+  const navigate = useNavigate();
 
   async function loadNames(): Promise<
     { value: string; label: string; color: string }[]
@@ -38,48 +40,91 @@ export default function SendForm(): ReactElement {
     const author = userChoice;
     const isRepeatCall = await checkExistingDoc(author, title);
     if (!isRepeatCall) {
-      const response = await fetch(`http://localhost:3000/documents`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: Date.now().toString(),
-          title: title,
-          author: author,
-        }),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_SERVER_ADD}/documents`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: Date.now().toString(),
+            title: title,
+            author: author,
+          }),
+        }
+      );
       if (response.status < 400) {
         alert("Вы успешно отправили документ!");
       }
       return null;
     }
+    alert("Вы уже отправляли заявку на этот документ, она уже была учтена.");
     throw Error(
-      "Вы уже отправляли заявку на этот документ, она уже была учтена"
+      "Вы уже отправляли заявку на этот документ, она уже была учтена."
     );
   }
 
   return (
-    <>
+    <div className="form-container">
       <div className="form">
-        <AsyncSelect
-          loadOptions={loadNames}
-          defaultOptions
-          cacheOptions
-          isSearchable={false}
-          onChange={(choice) => setUserChoice(choice!.value)}
-        />
-        <input
-          type="text"
-          name="title"
-          onChange={(event) => {
-            setTitleChoice(event.target.value);
-          }}
-        />
-        <button type="submit" onClick={() => sendDocument(titleChoice)}>
-          Послать документ
+        <label className="form__select">
+          ФИО конструктора
+          <AsyncSelect
+            loadOptions={loadNames}
+            defaultOptions
+            cacheOptions
+            isSearchable={false}
+            unstyled={true}
+            styles={{
+              control: (baseStyles, state) => ({
+                ...baseStyles,
+                borderColor: state.isFocused ? "#646cff" : undefined,
+              }),
+              option: (baseStyles, state) => ({
+                ...baseStyles,
+                backgroundColor: state.isFocused ? "#858585cc" : undefined,
+              }),
+            }}
+            classNames={{
+              control: () => "form__select__selector",
+            }}
+            onChange={(choice) => setUserChoice(choice!.value)}
+          />
+        </label>
+        <div>
+          <label className="form__name">
+            Наименование документа
+            <input
+              type="text"
+              name="title"
+              onChange={(event) => {
+                setTitleChoice(event.target.value);
+              }}
+            />
+          </label>
+          <button
+            disabled={titleChoice.length === 0}
+            className="form__submit"
+            type="submit"
+            onClick={() => sendDocument(titleChoice)}
+          >
+            Послать документ
+          </button>
+        </div>
+      </div>
+      <div className="choice">
+        <button
+          disabled={true}
+          type="submit"
+          onClick={() => navigate("/login")}
+        >
+          Форма для заявки
+        </button>
+        <button type="submit" onClick={() => navigate("/result")}>
+          Сводная таблица
         </button>
       </div>
-    </>
+    </div>
   );
 }

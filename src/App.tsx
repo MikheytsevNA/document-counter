@@ -6,7 +6,7 @@ function App() {
 
   return (
     <>
-      <div>
+      <div className="choice">
         <button type="submit" onClick={() => navigate("/login")}>
           Форма для заявки
         </button>

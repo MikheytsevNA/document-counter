@@ -14,7 +14,7 @@ export default function Login() {
   }
 
   return (
-    <>
+    <div className="login-container">
       <div className="authenticate">
         <label>
           Логин
@@ -40,6 +40,19 @@ export default function Login() {
           Войти
         </button>
       </div>
-    </>
+
+      <div className="choice">
+        <button
+          disabled={true}
+          type="submit"
+          onClick={() => navigate("/login")}
+        >
+          Форма для заявки
+        </button>
+        <button type="submit" onClick={() => navigate("/result")}>
+          Сводная таблица
+        </button>
+      </div>
+    </div>
   );
 }

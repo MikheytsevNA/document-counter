@@ -1,15 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, ReactElement } from "react";
 import "./Result.css";
 
 function Loading() {
   return <h2>🌀 Загрузка...</h2>;
 }
 
-async function getResults(): string[] {
+async function getResults(): Promise<[string, number][]> {
   const response = await fetch(`http://localhost:3000/documents`);
 
-  const data = await response.json();
-  const countTitles = data.reduce((acc, item) => {
+  const data: { title: string }[] = await response.json();
+  const countTitles: { [key: string]: number } = data.reduce<{
+    [key: string]: number;
+  }>((acc, item) => {
     if (acc[item.title]) {
       acc[item.title]++;
     } else {
@@ -23,12 +25,12 @@ async function getResults(): string[] {
 export default function Result() {
   const [state, setState] = useState("");
   const [error, setError] = useState(false);
-  const [list, setList] = useState([]);
+  const [list, setList] = useState<ReactElement[]>();
   useEffect(() => {
     setState("loading");
     getResults()
       .then((res) => {
-        res.sort((a, b) => b[1] - a[1]);
+        res.sort((a, b) => +b[1] - +a[1]);
         console.log(res);
         setState("success");
         setList(

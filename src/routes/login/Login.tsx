@@ -1,13 +1,15 @@
 import "./Login.css";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [password, setPassword] = useState("");
   const [login, setLogin] = useState("");
+  const navigate = useNavigate();
 
-  function authenticate(login, pass) {
+  function authenticate(login: string, pass: string) {
     if (login && pass) {
-      window.location = "/form";
+      navigate("/form");
     }
   }
 

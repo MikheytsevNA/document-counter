@@ -41,7 +41,7 @@
   color: #888;
 }
 
-.authorization {
+.authenticate {
   display: flex;
   flex-direction: column;
 }

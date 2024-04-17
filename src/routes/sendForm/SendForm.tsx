@@ -7,7 +7,7 @@ async function checkExistingDoc(
   title: string
 ): Promise<boolean> {
   const response = await fetch(
-    `http://localhost:3000/documents?author=${author}&title=${title}`
+    `${import.meta.env.VITE_SERVER_ADD}/documents?author=${author}&title=${title}`
   );
   const result = await response.json();
   return result.length > 0;
@@ -20,7 +20,9 @@ export default function SendForm(): ReactElement {
   async function loadNames(): Promise<
     { value: string; label: string; color: string }[]
   > {
-    const response = await fetch(`http://localhost:3000/documents`);
+    const response = await fetch(
+      `${import.meta.env.VITE_SERVER_ADD}/documents`
+    );
     const data = await response.json();
     const returnArray: string[] = Array.from(
       new Set(data.map((value: { author: string }) => value.author))

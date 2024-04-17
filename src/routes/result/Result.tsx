@@ -6,7 +6,9 @@ function Loading() {
 }
 
 async function getResults(): Promise<[string, number][]> {
-  const response = await fetch(`http://localhost:3000/documents`);
+  const response = await fetch(`${import.meta.env.VITE_SERVER_ADD}/documents`, {
+    mode: "no-cors",
+  });
 
   const data: { title: string }[] = await response.json();
   const countTitles: { [key: string]: number } = data.reduce<{

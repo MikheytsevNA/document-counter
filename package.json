@@ -7,7 +7,7 @@
     "json-server": "^1.0.0-alpha.23"
   },
   "scripts": {
-    "start": "npx json-server ./db.json"
+    "start": "npx json-server /db.json"
   },
   "keywords": [],
   "author": "",

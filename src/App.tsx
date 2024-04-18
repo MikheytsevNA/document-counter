@@ -1,19 +1,10 @@
 import "./App.css";
-import { useNavigate } from "react-router-dom";
+import NavButtons from "./components/NavButtons";
 
 function App() {
-  const navigate = useNavigate();
-
   return (
     <>
-      <div className="choice">
-        <button type="submit" onClick={() => navigate("/login")}>
-          Форма для заявки
-        </button>
-        <button type="submit" onClick={() => navigate("/result")}>
-          Сводная таблица
-        </button>
-      </div>
+      <NavButtons isDocDisabled={false} isResultsDisabled={false} />
     </>
   );
 }

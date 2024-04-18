@@ -1,6 +1,7 @@
 import "./Login.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import NavButtons from "../../components/NavButtons";
 
 export default function Login() {
   const [password, setPassword] = useState("");
@@ -41,18 +42,7 @@ export default function Login() {
         </button>
       </div>
 
-      <div className="choice">
-        <button
-          disabled={true}
-          type="submit"
-          onClick={() => navigate("/login")}
-        >
-          Форма для заявки
-        </button>
-        <button type="submit" onClick={() => navigate("/result")}>
-          Сводная таблица
-        </button>
-      </div>
+      <NavButtons isDocDisabled={true} isResultsDisabled={false} />
     </div>
   );
 }

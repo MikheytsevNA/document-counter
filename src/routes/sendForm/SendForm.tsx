@@ -1,7 +1,7 @@
 import "./SendForm.css";
 import AsyncSelect from "react-select/async";
 import { ReactElement, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import NavButtons from "../../components/NavButtons";
 
 async function checkExistingDoc(
   author: string,
@@ -17,7 +17,6 @@ async function checkExistingDoc(
 export default function SendForm(): ReactElement {
   const [userChoice, setUserChoice] = useState("");
   const [titleChoice, setTitleChoice] = useState("");
-  const navigate = useNavigate();
 
   async function loadNames(): Promise<
     { value: string; label: string; color: string }[]
@@ -32,7 +31,7 @@ export default function SendForm(): ReactElement {
     return returnArray.map((item: string) => ({
       value: item,
       label: item,
-      color: "black",
+      color: "black", // this select component needs styles in such way
     }));
   }
 
@@ -113,18 +112,7 @@ export default function SendForm(): ReactElement {
           </button>
         </div>
       </div>
-      <div className="choice">
-        <button
-          disabled={true}
-          type="submit"
-          onClick={() => navigate("/login")}
-        >
-          Форма для заявки
-        </button>
-        <button type="submit" onClick={() => navigate("/result")}>
-          Сводная таблица
-        </button>
-      </div>
+      <NavButtons isDocDisabled={true} isResultsDisabled={false} />
     </div>
   );
 }

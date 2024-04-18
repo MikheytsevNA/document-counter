@@ -1,6 +1,6 @@
 import { useState, useEffect, ReactElement } from "react";
 import "./Result.css";
-import { useNavigate } from "react-router-dom";
+import NavButtons from "../../components/NavButtons";
 
 function Loading() {
   return <h2>🌀 Загрузка...</h2>;
@@ -8,7 +8,6 @@ function Loading() {
 
 async function getResults(): Promise<[string, number][]> {
   const response = await fetch(`${import.meta.env.VITE_SERVER_ADD}/documents`);
-  console.log(response);
   const data: { title: string }[] = await response.json();
   const countTitles: { [key: string]: number } = data.reduce<{
     [key: string]: number;
@@ -27,14 +26,12 @@ export default function Result() {
   const [state, setState] = useState("");
   const [error, setError] = useState(false);
   const [list, setList] = useState<ReactElement[]>();
-  const navigate = useNavigate();
 
   useEffect(() => {
     setState("loading");
     getResults()
       .then((res) => {
         res.sort((a, b) => +b[1] - +a[1]);
-        console.log(res);
         setState("success");
         setList(
           res.map((title) => (
@@ -62,18 +59,7 @@ export default function Result() {
         <ul className="result-list">{list}</ul>
       )}
 
-      <div className="choice">
-        <button type="submit" onClick={() => navigate("/login")}>
-          Форма для заявки
-        </button>
-        <button
-          disabled={true}
-          type="submit"
-          onClick={() => navigate("/result")}
-        >
-          Сводная таблица
-        </button>
-      </div>
+      <NavButtons isDocDisabled={false} isResultsDisabled={true} />
     </div>
   );
 }

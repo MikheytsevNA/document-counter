@@ -103,7 +103,7 @@ export default function SendForm(): ReactElement {
             />
           </label>
           <button
-            disabled={titleChoice.length === 0}
+            disabled={!(titleChoice.length !== 0 && userChoice !== "")}
             className="form__submit"
             type="submit"
             onClick={() => sendDocument(titleChoice)}
